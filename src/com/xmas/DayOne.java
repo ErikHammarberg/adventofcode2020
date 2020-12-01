@@ -7,6 +7,7 @@ public class DayOne {
     public static void main(String[] args) {
 	      var inputs = Arrays.stream(input.split("\n")).mapToInt(val -> Integer.parseInt(val)).toArray();
         System.out.println("Answer one: " + puzzleOne(inputs));
+        System.out.println("Answer two: " + puzzleTwo(inputs));
     }
 
     public static int puzzleOne(int[] inputs) {
@@ -17,6 +18,22 @@ public class DayOne {
             for(int j = i+1 ; j < inputs.length; j++) {
                 if(inputs[i] + inputs[j] == 2020) {
                     return inputs[i] * inputs[j];
+                }
+            }
+        }
+        throw new RuntimeException("Answer not found");
+    }
+
+    public static int puzzleTwo(int[] inputs) {
+        int term1, term2, term3 = -1;
+
+        for(int i = 0; i < inputs.length; i++) {
+            for(int j = i+1 ; j < inputs.length; j++) {
+                for(int k = j + 1; k< inputs.length; k++) {
+                    if(inputs[i] + inputs[j] + inputs[k] == 2020) {
+                        return inputs[i] * inputs[j] * inputs[k];
+                }
+
                 }
             }
         }
