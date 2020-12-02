@@ -1,4 +1,5 @@
 import com.xmas.DayTwo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class DayTwoTest {
@@ -6,14 +7,27 @@ public class DayTwoTest {
   DayTwo sut = new DayTwo();
 
   @Test
-  public void dayTwoPuzzle1Test () {
-    System.out.println(sut.puzzle1(puzInput));
-    
+  public void dayTwoPuzzle1Test() {
+    var result = sut.puzzle1(puzInput);
+    System.out.println(result);
+    Assertions.assertEquals(603, result);
   }
 
   @Test
-      public void puz1Example() {
+  public void puz1Example() {
     System.out.println(sut.puzzle1(exampleInput));
+  }
+
+  @Test
+  public void puz2Examle() {
+    var result = sut.puzzle2(exampleInput);
+    Assertions.assertEquals(1, result);
+  }
+
+  @Test
+  public void puz2Test() {
+    var result = sut.puzzle2(puzInput);
+    System.out.println(result);
   }
 
   String exampleInput = "1-3 a: abcde\n"

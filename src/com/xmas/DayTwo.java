@@ -5,25 +5,32 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class DayTwo {
-  public static void main(String[] args) {
-
-  }
 
   public long puzzle1(String passwords) {
     return Arrays.stream(passwords.split("\\n")).filter(isValidPasswordPuzzle1).count();
 
   }
 
+  public long puzzle2(String passwords) {
+    return Arrays.stream(passwords.split("\\n")).filter(isValidPasswordPuzzle2).count();
+  }
+
   Predicate<String> isValidPasswordPuzzle1 = s -> {
     var row = extractRow(s);
-      var numberOfChars = row.password.chars().filter(letter -> letter == row.charachter).count();
-      if (numberOfChars <= row.max && numberOfChars >= row.min ) {
-        return true;
-      }
-      return false;
+    var numberOfChars = row.password.chars().filter(letter -> letter == row.charachter).count();
+    if (numberOfChars <= row.max && numberOfChars >= row.min) {
+      return true;
+    }
+    return false;
   };
 
-  PassRow extractRow (String input ) {
+  Predicate<String> isValidPasswordPuzzle2 = s -> {
+    var row = extractRow(s);
+    return row.password.charAt(row.min - 1) == row.charachter
+        ^ row.password.charAt(row.max - 1) == row.charachter;
+  };
+
+  PassRow extractRow(String input) {
     var patternString = "(\\d+)-(\\d+) (\\w): (\\w+)";
     var matcher = Pattern.compile(patternString).matcher(input);
     if (matcher.find()) {
@@ -39,6 +46,7 @@ public class DayTwo {
   }
 
   class PassRow {
+
     int min;
     int max;
 
