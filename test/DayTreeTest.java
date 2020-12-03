@@ -21,6 +21,22 @@ public class DayTreeTest {
     System.out.println(result);
   }
 
+  @Test
+  public void test2Test() {
+    var result = dayTree.puzzleTwo(exampleInput);
+    assertEquals(336, result);
+    System.out.println("Result: " + result);
+  }
+
+  @Test
+  public void puzzlTwo() {
+
+    // First faulty answer = 1438223688 To High
+    var result = dayTree.puzzleTwo(puzzleInput);
+    assertEquals(958815792, result);
+    System.out.println(result);
+  }
+
 
   String exampleInput = "..##.......\n"
       + "#...#...#..\n"
