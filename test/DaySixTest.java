@@ -16,7 +16,17 @@ public class DaySixTest {
         System.out.println(result);
     }
 
+    @Test
+    public void puz2Example() {
+        var result = sut.puzTwo(example1);
+        System.out.println(result);
+    }
 
+    @Test
+    public void puz2() {
+        var result = sut.puzTwo(input);
+        System.out.println(result);
+    }
 
     String example1 = "abc\n" +
             "\n" +
