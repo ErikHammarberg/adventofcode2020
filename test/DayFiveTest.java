@@ -19,6 +19,13 @@ public class DayFiveTest {
         System.out.println(result);
     }
 
+    // Wrong answer: 535 (to high)
+    @Test
+    public void two() {
+        var result = dayFive.puzzleTwo(input);
+        System.out.println(result);
+    }
+
     String oneExample = "BFFFBBFRRR\n" +
             "BFFFBBFRRR\n" +
             "BBFFBBFRLL";
