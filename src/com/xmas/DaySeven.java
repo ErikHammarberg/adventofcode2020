@@ -18,7 +18,7 @@ public class DaySeven {
 
   public int puzzleTwo(String input) {
     var theMap = buildContainingMap(input).ruleMap;
-    return findAllRuleContainers(theMap, "shiny gold");
+    return findAllRuleContainers(theMap, "shiny gold") - 1; // Remove the shiny gold bag
   }
 
   private Set<String> findAllContainers(Map<String, Set<String>> theMap, String findKey) {
@@ -38,12 +38,27 @@ public class DaySeven {
   private int findAllRuleContainers(Map<String, Set<Rule>> theMap, String findKey) {
     var containers = theMap.get(findKey);
 
+    int totalBags = 1;
     if(containers != null ) {
-      return containers.stream()
-          .mapToInt(rule -> findAllRuleContainers(theMap, rule.name) * rule.amount)
-          .sum();
+
+
+      for (var rule : containers) {
+        int requiredNoDownstream = findAllRuleContainers(theMap, rule.name);
+        int product = rule.amount * requiredNoDownstream;
+        System.out.println(String.format(
+            "Bag type: %s required: %d bags, and bag type: %s rule require : %d of these bags", rule.name, requiredNoDownstream, findKey, rule.amount));
+        totalBags += product;
+      }
+
     }
-    return 1;
+    return totalBags;
+//
+//    if(containers != null ) {
+//      return containers.stream()
+//          .mapToInt(rule -> findAllRuleContainers(theMap, rule.name) * rule.amount)
+//          .sum();
+//    }
+
   }
 
   private Tupple buildContainingMap(String input) {

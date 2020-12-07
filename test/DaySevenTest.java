@@ -26,6 +26,12 @@ public class DaySevenTest {
     assertEquals(126, result);
   }
 
+  @Test
+  public void two() {
+    var result = sut.puzzleTwo(input);
+    System.out.println(result);
+  }
+
   String exampleInput = "light red bags contain 1 bright white bag, 2 muted yellow bags.\n"
       + "dark orange bags contain 3 bright white bags, 4 muted yellow bags.\n"
       + "bright white bags contain 1 shiny gold bag.\n"
