@@ -16,6 +16,19 @@ public class DayEightTest {
   @Test
   public void one() {
     var result = sut.puzzleOne(input);
+    assertEquals(2034, result);
+    System.out.println(result);
+  }
+
+  @Test
+  public void testTwo() {
+    var result = sut.puzzleTwo(testInput);
+    assertEquals(8, result);
+  }
+
+  @Test
+  public void two() {
+    var result = sut.puzzleTwo(input);
     System.out.println(result);
   }
 
