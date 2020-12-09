@@ -14,6 +14,20 @@ public class DayNineTest {
   @Test
       public void one() {
     var result = DayNine.solveOne(input, 25);
+    assertEquals(105950735, result);
+    System.out.println(result);
+  }
+
+  @Test
+      public void testTwo() {
+    var result = DayNine.solveTwo(testOne, 5);
+    System.out.println(62);
+  }
+
+  @Test
+      public void Two() {
+    var result = DayNine.solveTwo(input, 25);
+    assertEquals(13826915, result);
     System.out.println(result);
   }
 
