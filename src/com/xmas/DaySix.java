@@ -17,7 +17,7 @@ public class DaySix {
     }
 
     private int calcTwo(String input) {
-        return input.lines()    
+        return input.lines()
                 .reduce((left, right) -> {
                     var sb = new StringBuilder();
                     for (var s : left.toCharArray()) {

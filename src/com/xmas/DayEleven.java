@@ -43,8 +43,7 @@ public class DayEleven {
         }
       }
       return count;
-
-    }).count();
+    }).sum();
   }
 
 
