@@ -19,7 +19,7 @@ public class DayElevenTEst {
   public void one() {
     var sut = new DayEleven(input);
     var result = sut.solveOne();
-    //assertEquals(37, result);
+    assertEquals(2283, result);
     System.out.println(result);
   }
 

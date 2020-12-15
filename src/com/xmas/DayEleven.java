@@ -64,6 +64,47 @@ public class DayEleven {
 
   }
 
+  private String getLineOfSight(int row, int col) {
+    var sb = new StringBuilder();
+
+    int i = 1;
+    boolean keep = true;
+
+    boolean upLeft= false;
+    boolean upUp = false;
+    boolean upRight= false;
+    boolean leftLeft = false;
+    boolean downLeft  = false;
+    boolean downDown= false;
+    boolean downRight= false;
+    boolean rightRight = false;
+    while(keep) {
+      boolean up = row -i > -1;
+      boolean down = row + i < numRows;
+      boolean left = col -i > -1;
+      boolean right = col +i < numCols;
+
+      if(!upLeft && up && left &&  active[row-1][col-1] != '.') {
+        sb.append(active[row-1][col-1]);
+        upLeft = true;
+      }
+      if(!upUp && up && active[row-1][col] != '.') {
+        sb.append(active[row-1][col]);
+        upUp = true;
+      }
+      if(!upRight && up && right && active[row-1][col+1] != '.') {
+        sb.append(active[row-1][col+1]);
+        upRight = true;
+      }
+      if(!leftLeft && left && active[row][col-1] != '.') {
+        sb.append(active[row][col-1]);
+        leftLeft = true;
+      }
+      keep = (up || down || left || right) && sb.length() < 8;
+    }
+    return sb.toString();
+  }
+
   private String getSurouding(int row, int col) {
     var sb = new StringBuilder();
     int rowLow = row - 1 >= 0 ? row -1 : 0;
