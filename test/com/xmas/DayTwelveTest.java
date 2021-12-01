@@ -21,6 +21,19 @@ class DayTwelveTest {
         System.out.println(result);
     }
 
+    @Test
+        public void testExampleTwo() {
+        var result = sut.solveTwo(exampleInput);
+        assertEquals(286, result);
+    }
+
+    @Test
+    public void testTwo() {
+        var result = sut.solveTwo(input);
+        assertEquals(145117, result);
+        System.out.println(result);
+    }
+
     String exampleInput =
         "F10\n"
         + "N3\n"

@@ -39,28 +39,25 @@ public class DayTwelve {
                 case
                     'F' -> forward(instruction.value());
             }
-
-
-
         }
 
-        private void moveWest(int instruction) {
+        void moveWest(int instruction) {
             x -= instruction;
         }
 
-        private void moveEast(int instruction) {
+        void moveEast(int instruction) {
             x+= instruction;
         }
 
-        private void moveSouth(int value) {
+        void moveSouth(int value) {
             y-= value;
         }
 
-        private void moveNorth(int value) {
+        void moveNorth(int value) {
             y+= value;
         }
 
-        private void turn(int value) {
+        void turn(int value) {
             if (value % 90 != 0 ) {
                 System.out.println("Wierd turn: " + value);
             }
@@ -70,7 +67,7 @@ public class DayTwelve {
             }
         }
 
-        private void forward(int value) {
+        void forward(int value) {
             switch (direction) {
                 case
                     0 -> moveNorth(value);
@@ -82,6 +79,67 @@ public class DayTwelve {
                     270 -> moveWest(value);
 
                 default -> throw new RuntimeException("Unsupported direction: " + value);
+            }
+
+        }
+    }
+
+    public int solveTwo(String input) {
+        SecondBoat solveBoat = new SecondBoat();
+        solveBoat.direction = 90;
+        WayPoint wayPoint = new WayPoint();
+        wayPoint.x = 10;
+        wayPoint.y = 1;
+        solveBoat.wayPoint = wayPoint;
+
+        Arrays.stream(input.split("\\n")).map(Instruction::fromString).forEach(instruction -> solveBoat.parseInsctruction(instruction));
+        return Math.abs(solveBoat.x) + Math.abs(solveBoat.y);
+    }
+
+    public class SecondBoat extends Boat {
+
+        private Boat wayPoint;
+
+        @Override
+        void moveWest(int value) {
+            wayPoint.moveWest(value);
+        }
+        @Override
+        void moveSouth(int value) {
+            wayPoint.moveSouth(value);
+        }
+        @Override
+        void moveNorth(int value) {
+            wayPoint.moveNorth(value);
+        }
+        @Override
+        void moveEast(int value) {
+            wayPoint.moveEast(value);
+        }
+        @Override
+        void turn(int value) {
+            wayPoint.turn(value);
+        }
+
+        @Override
+        void forward(int value) {
+            for (int i = 0 ; i < value ; i++) {
+                x += wayPoint.x;
+                y += wayPoint.y;
+            }
+        }
+    }
+
+    public class WayPoint extends Boat {
+        @Override
+        void turn(int value) {
+            if (value < 0) {
+                value += 360;
+            }
+            for (int i = 0; i < value / 90; i++) {
+                var oldX = x;
+                x = y;
+                y = -1 * oldX;
             }
 
         }
