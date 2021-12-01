@@ -1,6 +1,7 @@
 package com.xmas;
 
 import java.util.Arrays;
+import java.util.function.Function;
 
 public class DayEleven {
   public DayEleven(String input) {
@@ -21,17 +22,28 @@ public class DayEleven {
   int numCols;
 
   public int solveOne() {
+    return solve(4, getSurouding);
+  }
+
+  public int solveTwo() {
+    return solve(5, getLineOfSight);
+  }
+  
+  private int solve(int maxUntilChange, Function<Point, String> stringCreator) {
     boolean keepGoing = true;
     int numPass = 0;
     while(keepGoing) {
       boolean isChanged = false;
       for(int i = 0; i < numRows ; i++) {
         for(int j = 0; j < numCols; j++) {
-          isChanged = isChanged | changeSeat(i,j);
+          if(active[i][j] == '.') {
+            continue;
+          }
+          isChanged = isChanged | changeSeat(i,j, maxUntilChange, stringCreator.apply(new Point(i, j)));
         }
       }
       numPass++;
-      System.out.println("NumPass:" + numPass);
+      //System.out.println("NumPass:" + numPass);
       keepGoing = isChanged;
       swapArray();
     }
@@ -47,14 +59,14 @@ public class DayEleven {
   }
 
 
-  private boolean changeSeat(int row, int col) {
+  private boolean changeSeat(int row, int col, int maxAllowed, String lineOfSight) {
     if(active[row][col] == 'L') {
-      if(!getSurouding(row, col).contains("#")){
+      if(!lineOfSight.contains("#")){
         passive[row][col] = '#';
         return true;
       }
     } else if(active[row][col] == '#') {
-      if( 4 <= getSurouding(row, col).chars().filter(s -> s == '#').count()) {
+      if( maxAllowed <= lineOfSight.chars().filter(s -> s == '#').count()) {
         passive[row][col] = 'L';
         return true;
       }
@@ -64,7 +76,7 @@ public class DayEleven {
 
   }
 
-  private String getLineOfSight(int row, int col) {
+  private Function<Point, String> getLineOfSight =  (p) -> {
     var sb = new StringBuilder();
 
     int i = 1;
@@ -79,53 +91,81 @@ public class DayEleven {
     boolean downRight= false;
     boolean rightRight = false;
     while(keep) {
-      boolean up = row -i > -1;
-      boolean down = row + i < numRows;
-      boolean left = col -i > -1;
-      boolean right = col +i < numCols;
+      boolean up = p.row -i > -1;
+      boolean down = p.row + i < numRows;
+      boolean left = p.col -i > -1;
+      boolean right = p.col +i < numCols;
 
-      if(!upLeft && up && left &&  active[row-1][col-1] != '.') {
-        sb.append(active[row-1][col-1]);
+      if(!upLeft && up && left &&  active[p.row-i][p.col-i] != '.') {
+        sb.append(active[p.row-i][p.col-i]);
         upLeft = true;
       }
-      if(!upUp && up && active[row-1][col] != '.') {
-        sb.append(active[row-1][col]);
+      if(!upUp && up && active[p.row-i][p.col] != '.') {
+        sb.append(active[p.row-i][p.col]);
         upUp = true;
       }
-      if(!upRight && up && right && active[row-1][col+1] != '.') {
-        sb.append(active[row-1][col+1]);
+      if(!upRight && up && right && active[p.row-i][p.col+i] != '.') {
+        sb.append(active[p.row-i][p.col+i]);
         upRight = true;
       }
-      if(!leftLeft && left && active[row][col-1] != '.') {
-        sb.append(active[row][col-1]);
+      if(!leftLeft && left && active[p.row][p.col-i] != '.') {
+        sb.append(active[p.row][p.col-i]);
         leftLeft = true;
       }
+      if(!downLeft && left && down && active[p.row+i][p.col-i] != '.') {
+        sb.append( active[p.row+i][p.col-i]);
+        downLeft = true;
+      }
+      if(!downDown && down &&  active[p.row+i][p.col] != '.') {
+        sb.append( active[p.row+i][p.col]);
+        downDown = true;
+      }
+      if(!downRight && down && right &&  active[p.row+i][p.col+i] != '.') {
+        sb.append( active[p.row+i][p.col+i]);
+        downRight = true;
+      }
+      if(!rightRight && right &&  active[p.row][p.col+i] != '.') {
+        sb.append( active[p.row][p.col+i]);
+        rightRight = true;
+      }
       keep = (up || down || left || right) && sb.length() < 8;
+      i++;
     }
     return sb.toString();
-  }
+  };
 
-  private String getSurouding(int row, int col) {
+  private Function<Point, String> getSurouding = (p) -> {
     var sb = new StringBuilder();
-    int rowLow = row - 1 >= 0 ? row -1 : 0;
-    int rowHigh = row + 1 < numRows ? row +1 : row;
-    int colLow = col -1 >=0 ? col -1 : 0;
-    int colHigh = col +1 < numCols ? col+1 : col;
+    int rowLow = p.row - 1 >= 0 ? p.row -1 : 0;
+    int rowHigh = p.row + 1 < numRows ? p.row +1 : p.row;
+    int colLow = p.col -1 >=0 ? p.col -1 : 0;
+    int colHigh = p.col +1 < numCols ? p.col+1 : p.col;
 
     for(int i = rowLow ; i <= rowHigh ; i++) {
       for(int j = colLow ; j <= colHigh ; j++) {
-        if(i != row || j != col) {
+        if(i != p.row || j != p.col) {
           sb.append(active[i][j]);
         }
       }
     }
     return sb.toString();
-  }
+  };
+
 
 
   private void swapArray() {
     char[][] temp = active;
     active = passive;
     passive = temp;
+  }
+
+  class Point {
+    public Point(int row, int col) {
+      this.row = row;
+      this.col = col;
+    }
+
+    int row;
+    int col;
   }
 }

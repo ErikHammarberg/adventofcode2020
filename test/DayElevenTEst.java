@@ -23,6 +23,22 @@ public class DayElevenTEst {
     System.out.println(result);
   }
 
+  @Test
+  public void twoExample() {
+    var sut = new DayEleven(example);
+    var result = sut.solveTwo();
+    assertEquals(26, result);
+    System.out.println(result);
+  }
+
+  @Test
+  public void two() {
+    var sut = new DayEleven(input);
+    var result = sut.solveTwo();
+
+    System.out.println(result);
+  }
+
   String example = "L.LL.LL.LL\n"
       + "LLLLLLL.LL\n"
       + "L.L.L..L..\n"
