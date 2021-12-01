@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DayTwelve {
+public class DayTwelveSecondEdition {
 
     // shiop starts facing east.
 
