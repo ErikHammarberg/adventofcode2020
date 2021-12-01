@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class DayTwelveSecondEditionTestSecondEdition {
+class DayTwelveTest {
 
-    DayTwelveSecondEdition sut = new DayTwelveSecondEdition();
+    DayTwelve sut = new DayTwelve();
 
     @Test
         public void testExampleOne() {
