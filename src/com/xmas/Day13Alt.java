@@ -1,7 +1,25 @@
 package com.xmas;
 
+import java.util.Arrays;
+
 public class Day13Alt {
 
+    public long solveTwo(String input) {
+        var numStrings = Arrays.stream(input.split("\\n")[1].split(",")).toList();
+        Rotation lastRotation = new Rotation(Integer.parseInt(numStrings.get(0)),0);
+        for (int i = 1 ; i < numStrings.size(); i++) {
+            final String number = numStrings.get(i);
+            if(number.matches("\\d+")) {
+                lastRotation = combinedPhasedRotations(lastRotation, new Rotation(
+                        Integer.parseInt(number), i
+                ));
+            }
+        }
+        System.out.println("period:" + lastRotation.period());
+        System.out.println("offset:" + lastRotation.offset());
+        System.out.println("mod offset: " + Math.floorMod(-lastRotation.offset(), lastRotation.period()) );
+        return Math.floorMod(-lastRotation.offset(), lastRotation.period());
+    }
 
 
     /*
