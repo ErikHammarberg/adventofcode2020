@@ -34,19 +34,24 @@ public class Day13Alt {
     Rotation combinedPhasedRotations(Rotation red, Rotation green) {
 
         var gcd = GCD.extendedGcd(red.period(), green.period());
-        long phaseDifference = red.offset() - green.offset();
-        long pdMult = Math.floorDiv(phaseDifference , gcd.gcd());
-        long pdRemainder = Math.floorMod(phaseDifference , gcd.gcd());
-        if(pdRemainder != 0) {
+        BigInteger phaseDifference = BigInteger.valueOf( red.offset() - green.offset());
+        var pdMultArray = phaseDifference.divideAndRemainder(BigInteger.valueOf(gcd.gcd()));
+        BigInteger pdMult = pdMultArray[0];
+        BigInteger pdRemainder = pdMultArray[1];
+        if(!pdRemainder.equals(BigInteger.ZERO)) {
             throw new RuntimeException("Will never sync");
         }
 
         BigInteger bigCombinedPeriod = BigInteger.valueOf(red.period()).divide(BigInteger.valueOf(gcd.gcd())).multiply(BigInteger.valueOf(
             green.period()));
-        long combinedPeriod = red.period() / gcd.gcd() * green.period();
-        long combinedPhase = Math.floorMod(red.offset - gcd.s() * pdMult * red.period(), combinedPeriod);
+        //long combinedPeriod = red.period() / gcd.gcd() * green.period();
+        //long combinedPhase = Math.floorMod(red.offset - gcd.s() * pdMult * red.period(), combinedPeriod);
 
-        return new Rotation(combinedPeriod, combinedPhase);
+        BigInteger leftPart = BigInteger.valueOf(gcd.s()).multiply(pdMult).multiply(BigInteger.valueOf(red.period()));
+
+        BigInteger bigCombinedPhase = BigInteger.valueOf(red.offset).add(leftPart.negate()).mod(bigCombinedPeriod);
+
+        return new Rotation(bigCombinedPeriod.longValue(), bigCombinedPhase.longValue());
 
     }
 
