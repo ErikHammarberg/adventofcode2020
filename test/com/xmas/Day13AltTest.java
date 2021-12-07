@@ -29,6 +29,33 @@ class Day13AltTest {
     }
 
     @Test
+    public void testTwo2() {
+        long result = sut.solveTwo("1\n67,7,59,61");
+        assertEquals(754018, result);
+    }
+
+    @Test
+    public void testTwo3() {
+        long result = sut.solveTwo("1\n17,x,13,19");
+        assertEquals(3417, result);
+    }
+    @Test
+    public void testTwo4() {
+        long result = sut.solveTwo("1\n67,x,7,59,61");
+        assertEquals(779210, result);
+    }
+    @Test
+    public void testTwo5() {
+        long result = sut.solveTwo("1\n67,7,x,59,61");
+        assertEquals(1261476, result);
+    }
+    @Test
+    public void testTwo6() {
+        long result = sut.solveTwo("1\n1789,37,47,1889");
+        assertEquals(1202161486, result);
+    }
+
+    @Test
     public void testTwo() {
         long result = sut.solveTwo(input);
         System.out.println(result);

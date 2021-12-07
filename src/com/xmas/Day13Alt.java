@@ -1,5 +1,6 @@
 package com.xmas;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 public class Day13Alt {
@@ -11,7 +12,7 @@ public class Day13Alt {
             final String number = numStrings.get(i);
             if(number.matches("\\d+")) {
                 lastRotation = combinedPhasedRotations(lastRotation, new Rotation(
-                        Integer.parseInt(number), i
+                        Long.parseLong(number), i
                 ));
             }
         }
@@ -39,6 +40,9 @@ public class Day13Alt {
         if(pdRemainder != 0) {
             throw new RuntimeException("Will never sync");
         }
+
+        BigInteger bigCombinedPeriod = BigInteger.valueOf(red.period()).divide(BigInteger.valueOf(gcd.gcd())).multiply(BigInteger.valueOf(
+            green.period()));
         long combinedPeriod = red.period() / gcd.gcd() * green.period();
         long combinedPhase = Math.floorMod(red.offset - gcd.s() * pdMult * red.period(), combinedPeriod);
 
