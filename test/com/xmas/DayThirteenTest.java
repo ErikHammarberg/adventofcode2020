@@ -21,9 +21,20 @@ class DayThirteenTest {
         System.out.println(result);
     }
 
+    @Test
+    public void testTwoExample() {
+        long result = sut.solveTwo(exampleInput);
+        assertEquals(1068781l, result);
+    }
+    @Test
+            public void testTwo() {
+        long result = sut.solveTwo(input);
+        System.out.println(result);
+    }
+
     String exampleInput =
             "939\n" +
-            "7,13,x,x,59,x,31,19";
+                    "7,13,x,x,59,x,31,19";
 
     String input =
             "1008832\n" +
